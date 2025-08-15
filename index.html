@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'Ontarien</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+        font-family: 'Press Start 2P', monospace;
+        background-color:#2b2b2b;
+        color:#e0e0e0;
+        line-height:1.4;
+    }
+    header {
+        width:100%;
+        background:#3a3a3a;
+        padding:20px;
+        text-align:center;
+        border-bottom:1px solid #555;
+        position:sticky;
+        top:0;
+    }
+    header h1 {
+        font-size:2em;
+    }
+    nav a {
+        color:#ccc;
+        text-decoration:none;
+        margin:0 10px;
+        font-size:0.8em;
+    }
+    nav a:hover {
+        text-decoration:underline;
+    }
+    main {
+        padding:40px 20px;
+        max-width:900px;
+        margin:0 auto;
+    }
+    section {
+        margin-bottom:60px;
+    }
+    .description, .credits {
+        background:rgba(40,40,40,0.8);
+        padding:20px;
+        border-radius:8px;
+        border:1px solid #555;
+    }
+    .links a {
+        display:inline-block;
+        margin:10px;
+        padding:8px 15px;
+        border:1px solid #888;
+        border-radius:5px;
+        text-decoration:none;
+        color:#ccc;
+        transition:0.3s;
+    }
+    .links a:hover {
+        background:#555;
+        color:#fff;
+    }
+    footer {
+        background:#3a3a3a;
+        padding:20px;
+        text-align:center;
+        border-top:1px solid #555;
+        font-size:0.7em;
+        color:#888;
+        position:relative;
+    }
+    .sprite {
+        width:64px;
+        height:64px;
+        background-image: url('sprite.png'); /* placeholder */
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin:0 auto 20px auto;
+        animation: bounce 1s infinite alternate;
+    }
+    @keyframes bounce {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-10px); }
+    }
+    /* Subtle snowfall */
+    .snowflake {
+        position:absolute;
+        top:-10px;
+        color:#ccc;
+        font-size:1em;
+        user-select:none;
+        z-index:1000;
+        animation-name:fall;
+        animation-duration:10s;
+        animation-iteration-count:infinite;
+        animation-timing-function:linear;
+    }
+    @keyframes fall {
+        0% { transform: translateY(0) rotate(0deg); }
+        100% { transform: translateY(110vh) rotate(360deg); }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>L'Ontarien</h1>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#screenshots">Screenshots</a>
+        <a href="#download">Download</a>
+        <a href="#credits">Credits</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<main>
+
+<section id="about">
+    <div class="sprite"></div>
+    <div class="description">
+        <h2>About the Game</h2>
+        <p>
+            <!-- Placeholder: fill in later -->
+            Description goes here. Small town, big chaos. Choices matter, secrets spill, survival isn’t guaranteed.
+        </p>
+    </div>
+</section>
+
+<section id="screenshots">
+    <h2>Screenshots</h2>
+    <p>Placeholder for game images / gifs.</p>
+</section>
+
+<section id="download">
+    <h2>Download / Play</h2>
+    <div class="links">
+        <a href="#">itch.io Link</a>
+        <a href="#">GitHub Repo</a>
+        <a href="#">Other Download</a>
+    </div>
+</section>
+
+<section id="credits">
+    <div class="credits">
+        <h2>Credits</h2>
+        <p>
+            Game by [Your Name / Team]<br>
+            Pixel Art: [Artist Name]<br>
+            Music & SFX: [Composer Name]<br>
+            Story: [Writer Name]<br>
+            © 2025 L'Ontarien Project. All Rights Reserved.
+        </p>
+    </div>
+</section>
+
+<section id="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:youremail@example.com">youremail@example.com</a></p>
+</section>
+
+</main>
+
+<footer>
+    L'Ontarien © 2025. All Rights Reserved.
+</footer>
+
+<!-- Snowflake script -->
+<div id="snow"></div>
+<script>
+const snowContainer = document.getElementById('snow');
+const snowCount = 50;
+for(let i=0; i<snowCount; i++){
+    const snow = document.createElement('div');
+    snow.className = 'snowflake';
+    snow.style.left = Math.random()*100 + 'vw';
+    snow.style.fontSize = Math.random()*10 + 10 + 'px';
+    snow.style.animationDuration = 5 + Math.random()*5 + 's';
+    snow.innerHTML = '❄';
+    snowContainer.appendChild(snow);
+}
+</script>
+
+</body>
+</html>
