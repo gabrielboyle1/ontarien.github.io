@@ -5,37 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>L'Ontarien</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-<form id="myForm">
-  <input type="text" name="name" placeholder="Your name" required>
-  <div class="cf-turnstile" data-sitekey="0x4AAAAAABtQl5SzzyMn9Awx"></div>
-  <button type="submit">Submit</button>
-</form>
-
-<div id="responseMessage"></div>
-
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-<script>
-const form = document.querySelector("#myForm")
-const responseDiv = document.querySelector("#responseMessage")
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault()
-  const formData = new FormData(form)
-
-  try {
-    const resp = await fetch("https://damp-sky-749d.gabriel-boyle1.workers.dev/", {
-      method: "POST",
-      body: formData
-    })
-
-    const text = await resp.text()
-    responseDiv.textContent = text
-  } catch (err) {
-    responseDiv.textContent = err
-    console.error(err)
-  }
-})
-</script>
 
 <style>
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -149,6 +118,37 @@ form.addEventListener("submit", async (e) => {
 </header>
 
 <main>
+<form id="myForm">
+  <input type="text" name="name" placeholder="Your name" required>
+  <div class="cf-turnstile" data-sitekey="0x4AAAAAABtQl5SzzyMn9Awx"></div>
+  <button type="submit">Submit</button>
+</form>
+
+<div id="responseMessage"></div>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script>
+const form = document.querySelector("#myForm")
+const responseDiv = document.querySelector("#responseMessage")
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault()
+  const formData = new FormData(form)
+
+  try {
+    const resp = await fetch("https://damp-sky-749d.gabriel-boyle1.workers.dev/", {
+      method: "POST",
+      body: formData
+    })
+
+    const text = await resp.text()
+    responseDiv.textContent = text
+  } catch (err) {
+    responseDiv.textContent = err
+    console.error(err)
+  }
+})
+</script>
 
 <section id="about">
     <div class="sprite"></div>
