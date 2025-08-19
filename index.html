@@ -7,20 +7,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
-/* Base reset */
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
     font-family: 'Press Start 2P', monospace;
-    background: #0b1a33;
-    color:#eee;
     min-height:100vh;
-    position:relative;
     overflow-x:hidden;
+    color:#eee;
+    background: linear-gradient(to bottom, #0b1a33 0%, #1b2c50 40%, #2b3b60 100%);
+    position:relative;
 }
+
+/* Parallax layers */
+.layer {
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    pointer-events:none;
+    z-index:0;
+}
+.hills { background: url('hills.png') repeat-x bottom; background-size: cover; z-index:1; }
+.cabins { background: url('cabins.png') repeat-x bottom; background-size: contain; z-index:2; }
+.trees { background: url('trees.png') repeat-x bottom; background-size: contain; z-index:3; }
 
 /* Header */
 header {
-    background:#4b2e1e; /* cozy wood brown */
+    background:#4b2e1e;
     padding:20px;
     text-align:center;
     border-bottom:2px solid #3a2419;
@@ -28,121 +39,40 @@ header {
     top:0;
     z-index:100;
 }
-header h1 {
-    font-size:2em;
-    color:#ffeedd;
-    text-shadow: 1px 1px #3a2419;
-}
-nav a {
-    color:#ffeedd;
-    text-decoration:none;
-    margin:0 12px;
-    font-size:0.8em;
-    transition:0.3s;
-}
-nav a:hover {
-    text-decoration:underline;
-}
+header h1 { font-size:2em; color:#ffeedd; text-shadow: 1px 1px #3a2419; }
+nav a { color:#ffeedd; text-decoration:none; margin:0 12px; font-size:0.8em; transition:0.3s; }
+nav a:hover { text-decoration:underline; }
 
-/* Main content */
-main {
-    padding:50px 20px;
-    max-width:900px;
-    margin:0 auto;
-    text-align:center;
-}
+/* Hero */
+main { padding:50px 20px; max-width:900px; margin:0 auto; text-align:center; position:relative; z-index:10; }
+.hero h2 { font-size:1.5em; color:#fff; margin-bottom:15px; text-shadow:1px 1px #3a2419; }
+.hero p { font-size:0.8em; color:#ddd; max-width:600px; margin:0 auto 30px auto; }
 
-/* Hero section */
-.hero {
-    margin-bottom:60px;
-}
-.hero h2 {
-    font-size:1.5em;
-    color:#ddd;
-    margin-bottom:15px;
-}
-.hero p {
-    font-size:0.8em;
-    color:#ccc;
-    max-width:600px;
-    margin:0 auto 30px auto;
-}
-
-/* Pixel sprite floating */
-.sprite {
-    width:64px;
-    height:64px;
-    background-image: url('sprite.png'); /* placeholder */
-    background-size: contain;
-    background-repeat:no-repeat;
-    margin:0 auto 20px auto;
-    animation: float 2s infinite alternate;
-}
-@keyframes float {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-10px); }
-}
+/* Pixel sprite */
+.sprite { width:64px; height:64px; background-image:url('sprite.png'); background-size:contain; background-repeat:no-repeat; margin:0 auto 20px auto; animation: float 2s infinite alternate; }
+@keyframes float { 0%{transform:translateY(0);} 100%{transform:translateY(-10px);} }
 
 /* Buttons */
-.buttons a {
-    display:inline-block;
-    margin:8px;
-    padding:10px 20px;
-    border:1px solid #7da6c7;
-    border-radius:6px;
-    background:#3a2419;
-    color:#ffeedd;
-    text-decoration:none;
-    font-size:0.8em;
-    transition:0.3s;
-}
-.buttons a:hover {
-    background:#5a3626;
-}
+.buttons a { display:inline-block; margin:8px; padding:10px 20px; border:1px solid #7da6c7; border-radius:6px; background:#3a2419; color:#ffeedd; text-decoration:none; font-size:0.8em; transition:0.3s; }
+.buttons a:hover { background:#5a3626; }
 
-/* Snowfall with heavy drop shadow */
-.snowflake {
-    position:absolute;
-    top:-10px;
-    color:#fff;
-    font-size:1em;
-    user-select:none;
-    z-index:10;
-    animation-name:fall;
-    animation-duration:10s;
-    animation-iteration-count:infinite;
-    animation-timing-function:linear;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-}
-@keyframes fall {
-    0% { transform: translateY(0) rotate(0deg); }
-    100% { transform: translateY(110vh) rotate(360deg); }
-}
+/* Snowflakes */
+.snowflake { position:absolute; top:-10px; color:#fff; font-size:1em; user-select:none; z-index:20; animation-name:fall; animation-duration:10s; animation-iteration-count:infinite; animation-timing-function:linear; text-shadow:2px 2px 4px rgba(0,0,0,0.7); }
+@keyframes fall { 0%{transform:translateY(0) rotate(0deg);} 100%{transform:translateY(110vh) rotate(360deg);} }
 
 /* Twinkling stars */
-.star {
-    position:absolute;
-    color: #fff;
-    font-size: 1px;
-    animation: twinkle 3s infinite alternate;
-    opacity:0.8;
-}
-@keyframes twinkle {
-    0% { opacity:0.3; }
-    100% { opacity:1; }
-}
+.star { position:absolute; color: #fff; font-size: 1px; animation: twinkle 3s infinite alternate; opacity:0.8; }
+@keyframes twinkle { 0%{opacity:0.3;} 100%{opacity:1;} }
 
 /* Footer */
-footer {
-    text-align:center;
-    padding:25px;
-    border-top:2px solid #3a2419;
-    font-size:0.7em;
-    color:#ccc;
-}
+footer { text-align:center; padding:25px; border-top:2px solid #3a2419; font-size:0.7em; color:#ccc; position:relative; z-index:10; }
 </style>
 </head>
 <body>
+
+<div class="layer hills"></div>
+<div class="layer cabins"></div>
+<div class="layer trees"></div>
 
 <header>
     <h1>L'Ontarien</h1>
@@ -158,7 +88,7 @@ footer {
 <main>
     <section class="hero">
         <h2>Bienvenue dans le village enneigé</h2>
-        <p>Explore a small Quebec town, make choices, meet quirky locals, and survive the snowy mysteries. Cozy pixel art, lots of secrets, your actions shape the story.</p>
+        <p>Explore a small Quebec town, make choices, meet quirky locals, and survive snowy mysteries. Cozy pixel art, secrets everywhere, your actions shape the story.</p>
         <div class="sprite"></div>
         <div class="buttons">
             <a href="/download/">Play Now</a>
@@ -167,17 +97,15 @@ footer {
     </section>
 </main>
 
-<footer>
-    L'Ontarien © 2025. All Rights Reserved.
-</footer>
+<footer>L'Ontarien © 2025. All Rights Reserved.</footer>
 
-<!-- Snowfall script -->
+<!-- Snowfall and stars -->
 <div id="snow"></div>
 <script>
-const snowContainer = document.getElementById('snow');
-const snowCount = 60;
+const snowContainer=document.getElementById('snow');
+const snowCount=60;
 for(let i=0;i<snowCount;i++){
-    const snow = document.createElement('div');
+    const snow=document.createElement('div');
     snow.className='snowflake';
     snow.style.left=Math.random()*100+'vw';
     snow.style.fontSize=(Math.random()*8+8)+'px';
@@ -185,10 +113,8 @@ for(let i=0;i<snowCount;i++){
     snow.innerHTML='❄';
     snowContainer.appendChild(snow);
 }
-
-// Twinkling stars
 for(let i=0;i<50;i++){
-    const star = document.createElement('div');
+    const star=document.createElement('div');
     star.className='star';
     star.style.left=Math.random()*100+'vw';
     star.style.top=Math.random()*50+'vh';
@@ -197,6 +123,14 @@ for(let i=0;i<50;i++){
     star.innerHTML='✦';
     document.body.appendChild(star);
 }
+
+// Optional: parallax movement on scroll
+window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    document.querySelector('.hills').style.transform = `translateX(${scrollTop*0.02}px)`;
+    document.querySelector('.cabins').style.transform = `translateX(${scrollTop*0.04}px)`;
+    document.querySelector('.trees').style.transform = `translateX(${scrollTop*0.06}px)`;
+});
 </script>
 
 </body>
