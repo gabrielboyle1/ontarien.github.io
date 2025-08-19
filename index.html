@@ -7,118 +7,105 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
-/* Reset + base */
+/* Base reset */
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
     font-family: 'Press Start 2P', monospace;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2b2b2b 100%);
-    color:#eee;
+    background: linear-gradient(to bottom, #f0f4f8 0%, #dbe7f0 100%);
+    color:#333;
+    min-height:100vh;
+    position:relative;
     overflow-x:hidden;
 }
 
 /* Header */
 header {
-    width:100%;
-    padding:25px 0;
+    background:#a2c4e8;
+    padding:20px;
     text-align:center;
-    background: rgba(30,30,30,0.9);
-    border-bottom: 2px solid #444;
-    position: sticky;
+    border-bottom:2px solid #7da6c7;
+    position:sticky;
     top:0;
-    z-index: 100;
+    z-index:100;
 }
 header h1 {
-    font-size: 2.5em;
-    color: #f0f0f0;
-    text-shadow: 0 0 10px #00f, 0 0 20px #0ff;
+    font-size:2em;
+    color:#fff;
+    text-shadow: 1px 1px #7da6c7;
 }
 nav a {
-    color:#0ff;
+    color:#fff;
     text-decoration:none;
-    margin: 0 15px;
-    font-size: 0.9em;
-    transition: 0.3s;
+    margin:0 12px;
+    font-size:0.8em;
+    transition:0.3s;
 }
 nav a:hover {
-    color: #ff0;
-    text-shadow: 0 0 8px #ff0;
+    text-decoration:underline;
 }
 
-/* Main sections */
-main { padding: 60px 20px; max-width:1200px; margin:0 auto; position:relative; }
+/* Main content */
+main {
+    padding:50px 20px;
+    max-width:900px;
+    margin:0 auto;
+    text-align:center;
+}
 
 /* Hero section */
 .hero {
-    position: relative;
-    text-align:center;
-    padding:80px 20px;
+    margin-bottom:60px;
 }
 .hero h2 {
-    font-size: 2em;
-    color: #0ff;
-    text-shadow: 0 0 15px #0ff, 0 0 25px #00f;
-    margin-bottom: 20px;
+    font-size:1.5em;
+    color:#555;
+    margin-bottom:15px;
 }
 .hero p {
-    font-size: 0.85em;
-    max-width:700px;
-    margin:0 auto;
-    color:#ccc;
-    text-shadow: 0 0 3px #000;
+    font-size:0.8em;
+    color:#444;
+    max-width:600px;
+    margin:0 auto 30px auto;
 }
 
-/* Sprite animation */
+/* Pixel sprite floating */
 .sprite {
-    width: 96px;
-    height: 96px;
+    width:64px;
+    height:64px;
     background-image: url('sprite.png'); /* placeholder */
     background-size: contain;
-    background-repeat: no-repeat;
-    margin: 40px auto 0 auto;
-    animation: float 2s infinite ease-in-out alternate;
+    background-repeat:no-repeat;
+    margin:0 auto 20px auto;
+    animation: float 2s infinite alternate;
 }
 @keyframes float {
-    0% { transform: translateY(0) rotate(0deg); }
-    100% { transform: translateY(-20px) rotate(10deg); }
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
 }
 
 /* Buttons */
 .buttons a {
     display:inline-block;
-    margin: 15px;
-    padding: 12px 25px;
-    border:2px solid #0ff;
-    border-radius: 8px;
+    margin:8px;
+    padding:10px 20px;
+    border:1px solid #7da6c7;
+    border-radius:6px;
+    background:#cbe4f6;
+    color:#333;
     text-decoration:none;
-    color:#0ff;
     font-size:0.8em;
     transition:0.3s;
-    position:relative;
-    overflow:hidden;
 }
 .buttons a:hover {
+    background:#a2c4e8;
     color:#fff;
-    border-color:#ff0;
-}
-.buttons a::before {
-    content:'';
-    position:absolute;
-    top:0; left:-100%;
-    width:100%;
-    height:100%;
-    background: rgba(255,255,0,0.2);
-    transition:0.3s;
-    transform: skewX(-20deg);
-}
-.buttons a:hover::before {
-    left:100%;
 }
 
-/* Snowfall */
+/* Snowfall with heavy drop shadow */
 .snowflake {
     position:absolute;
     top:-10px;
-    color:#ccc;
+    color:#fff;
     font-size:1em;
     user-select:none;
     z-index:10;
@@ -126,6 +113,9 @@ main { padding: 60px 20px; max-width:1200px; margin:0 auto; position:relative; }
     animation-duration:10s;
     animation-iteration-count:infinite;
     animation-timing-function:linear;
+
+    /* Heavier drop shadow for depth */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
 }
 @keyframes fall {
     0% { transform: translateY(0) rotate(0deg); }
@@ -136,9 +126,9 @@ main { padding: 60px 20px; max-width:1200px; margin:0 auto; position:relative; }
 footer {
     text-align:center;
     padding:25px;
-    border-top:2px solid #444;
-    color:#888;
+    border-top:2px solid #7da6c7;
     font-size:0.7em;
+    color:#666;
 }
 </style>
 </head>
@@ -157,8 +147,8 @@ footer {
 
 <main>
     <section class="hero">
-        <h2>Small Town. Big Chaos.</h2>
-        <p>Navigate a web of choices, secrets, and consequences in the middle of nowhere Quebec. Your decisions shape the story — survival is never guaranteed.</p>
+        <h2>Bienvenue dans le village enneigé</h2>
+        <p>Explore a small Quebec town, make choices, meet quirky locals, and survive the snowy mysteries. Cozy pixel art, lots of secrets, your actions shape the story.</p>
         <div class="sprite"></div>
         <div class="buttons">
             <a href="/download/">Play Now</a>
@@ -175,12 +165,12 @@ footer {
 <div id="snow"></div>
 <script>
 const snowContainer = document.getElementById('snow');
-const snowCount = 50;
+const snowCount = 60;
 for(let i=0;i<snowCount;i++){
     const snow = document.createElement('div');
     snow.className='snowflake';
     snow.style.left=Math.random()*100+'vw';
-    snow.style.fontSize=(Math.random()*10+10)+'px';
+    snow.style.fontSize=(Math.random()*8+8)+'px';
     snow.style.animationDuration=(5+Math.random()*5)+'s';
     snow.innerHTML='❄';
     snowContainer.appendChild(snow);
