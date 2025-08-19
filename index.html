@@ -5,146 +5,144 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>L'Ontarien</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
     font-family: 'Press Start 2P', monospace;
-    background: linear-gradient(to bottom, #0d1a2a 0%, #1b2c50 50%, #2b2b2b 100%);
-    color:#e0e0e0;
-    line-height:1.4;
-    overflow-x: hidden;
-    position: relative;
-  }
-  header {
-    width:100%;
-    background:#3a3a3a;
+    min-height:100vh;
+    overflow-x:hidden;
+    color:#eee;
+    background: linear-gradient(to bottom, #0b1a33 0%, #1b2c50 40%, #2b3b60 100%);
+    position:relative;
+}
+
+/* Parallax layers */
+.layer {
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    pointer-events:none;
+    z-index:0;
+}
+.hills { background: url('hills.png') repeat-x bottom; background-size: cover; z-index:1; }
+.cabins { background: url('cabins.png') repeat-x bottom; background-size: contain; z-index:2; }
+.trees { background: url('trees.png') repeat-x bottom; background-size: contain; z-index:3; }
+
+/* Header */
+header {
+    background:#4b2e1e;
     padding:20px;
     text-align:center;
-    border-bottom:1px solid #555;
+    border-bottom:2px solid #3a2419;
     position:sticky;
     top:0;
-    z-index: 100;
-  }
-  header h1 { font-size:2em; }
-  nav a { color:#ccc; text-decoration:none; margin:0 10px; font-size:0.8em; }
-  nav a:hover { text-decoration:underline; }
-  main { padding:40px 20px; max-width:900px; margin:0 auto; position: relative; z-index:1; }
-  section { margin-bottom:60px; }
-  .description, .credits { background:rgba(40,40,40,0.8); padding:20px; border-radius:8px; border:1px solid #555; }
-  .links a { display:inline-block; margin:10px; padding:8px 15px; border:1px solid #888; border-radius:5px; text-decoration:none; color:#ccc; transition:0.3s; }
-  .links a:hover { background:#555; color:#fff; }
-  footer { background:#3a3a3a; padding:20px; text-align:center; border-top:1px solid #555; font-size:0.7em; color:#888; position:relative; }
-  canvas { image-rendering: pixelated; display:block; margin:0 auto; }
-  .snowflake { position:absolute; top:-10px; color:#ccc; font-size:1em; user-select:none; z-index:1000; animation-name:fall; animation-duration:10s; animation-iteration-count:infinite; animation-timing-function:linear; text-shadow: 1px 1px 2px #000; }
-  @keyframes fall { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(110vh) rotate(360deg); } }
+    z-index:100;
+}
+header h1 { font-size:2em; color:#ffeedd; text-shadow: 1px 1px #3a2419; }
+nav a { color:#ffeedd; text-decoration:none; margin:0 12px; font-size:0.8em; transition:0.3s; }
+nav a:hover { text-decoration:underline; }
+
+/* Hero */
+main { padding:50px 20px; max-width:900px; margin:0 auto; text-align:center; position:relative; z-index:10; }
+.hero h2 { font-size:1.5em; color:#fff; margin-bottom:15px; text-shadow:1px 1px #3a2419; }
+.hero p { font-size:0.8em; color:#ddd; max-width:600px; margin:0 auto 30px auto; }
+
+/* Pixel sprite canvas */
+#heroCanvas { width:128px; height:128px; display:block; margin:0 auto 20px auto; image-rendering: pixelated; }
+
+/* Buttons */
+.buttons a { display:inline-block; margin:8px; padding:10px 20px; border:1px solid #7da6c7; border-radius:6px; background:#3a2419; color:#ffeedd; text-decoration:none; font-size:0.8em; transition:0.3s; }
+.buttons a:hover { background:#5a3626; }
+
+/* Snowflakes */
+.snowflake { position:absolute; top:-10px; color:#fff; font-size:1em; user-select:none; z-index:20; animation-name:fall; animation-duration:10s; animation-iteration-count:infinite; animation-timing-function:linear; text-shadow:2px 2px 4px rgba(0,0,0,0.7); }
+@keyframes fall { 0%{transform:translateY(0) rotate(0deg);} 100%{transform:translateY(110vh) rotate(360deg);} }
+
+/* Twinkling stars */
+.star { position:absolute; color: #fff; font-size: 1px; animation: twinkle 3s infinite alternate; opacity:0.8; }
+@keyframes twinkle { 0%{opacity:0.3;} 100%{opacity:1;} }
+
+/* Footer */
+footer { text-align:center; padding:25px; border-top:2px solid #3a2419; font-size:0.7em; color:#ccc; position:relative; z-index:10; }
 </style>
 </head>
 <body>
 
+<div class="layer hills"></div>
+<div class="layer cabins"></div>
+<div class="layer trees"></div>
+
 <header>
-  <h1>L'Ontarien</h1>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#screenshots">Screenshots</a>
-    <a href="#download">Download</a>
-    <a href="#credits">Credits</a>
-    <a href="#contact">Contact</a>
-  </nav>
+    <h1>L'Ontarien</h1>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about/">About</a>
+        <a href="/download/">Download</a>
+        <a href="/credits/">Credits</a>
+        <a href="/contact/">Contact</a>
+    </nav>
 </header>
 
 <main>
-  <section id="about">
-    <canvas id="spriteCanvas" width="32" height="32"></canvas>
-    <canvas id="hillsCanvas" width="1920" height="200"></canvas>
-    <div class="description">
-      <h2>About the Game</h2>
-      <p>Small town, big chaos. Choices matter, secrets spill, survival isn’t guaranteed.</p>
-    </div>
-  </section>
-
-  <section id="screenshots">
-    <h2>Screenshots</h2>
-    <p>Placeholder for game images / gifs.</p>
-  </section>
-
-  <section id="download">
-    <h2>Download / Play</h2>
-    <div class="links">
-      <a href="#">itch.io Link</a>
-      <a href="#">GitHub Repo</a>
-      <a href="#">Other Download</a>
-    </div>
-  </section>
-
-  <section id="credits">
-    <div class="credits">
-      <h2>Credits</h2>
-      <p>
-        Game by Gabriel Boyle<br>
-        Pixel Art: ctlaserdisc<br>
-        Music & SFX: ctlaserdisc<br>
-        Story: Gabriel Boyle<br>
-        Code: Gabriel Boyle<br>
-        Marketing: Team effort!<br>
-        © 2025 L'Ontarien Project. All Rights Reserved.
-      </p>
-    </div>
-  </section>
-
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Creative Director: <a href="mailto:ctlaserdisc@ontarien.linkpc.net">ctlaserdisc@ontarien.linkpc.net</a></p>
-    <p>Technical Director: <a href="mailto:gabriel@ontarien.linkpc.net">gabriel@ontarien.linkpc.net</a></p>
-  </section>
+    <section class="hero">
+        <h2>Bienvenue dans le village enneigé</h2>
+        <p>Explore a small Quebec town, make choices, meet quirky locals, and survive snowy mysteries. Cozy pixel art, secrets everywhere, your actions shape the story.</p>
+        <canvas id="heroCanvas" width="32" height="32"></canvas>
+        <div class="buttons">
+            <a href="/download/">Play Now</a>
+            <a href="/about/">Learn More</a>
+        </div>
+    </section>
 </main>
 
-<footer>
-  L'Ontarien © 2025. All Rights Reserved.
-</footer>
+<footer>L'Ontarien © 2025. All Rights Reserved.</footer>
 
-<!-- Snowflakes -->
+<!-- Snowfall and stars -->
 <div id="snow"></div>
 
 <script>
-// === Hero Sprite Generator ===
-const spriteCanvas = document.getElementById('spriteCanvas');
-const sctx = spriteCanvas.getContext('2d');
-const colors = { coat: '#2b3b60', scarf: '#ff3f3f', skin: '#fdd7b0', eyes: '#000' };
-sctx.clearRect(0, 0, 32, 32);
-sctx.fillStyle = colors.coat; sctx.fillRect(12, 12, 8, 12); sctx.fillRect(10, 12, 2, 10); sctx.fillRect(20, 12, 2, 10);
-sctx.fillRect(12, 24, 3, 8); sctx.fillRect(17, 24, 3, 8);
-sctx.fillStyle = colors.skin; sctx.fillRect(13, 8, 6, 6);
-sctx.fillStyle = colors.scarf; sctx.fillRect(12, 14, 8, 2);
-sctx.fillStyle = colors.eyes; sctx.fillRect(14, 10, 1, 1); sctx.fillRect(18, 10, 1, 1);
+// === Pixel hero drawing ===
+const canvas = document.getElementById('heroCanvas');
+const ctx = canvas.getContext('2d');
+const colors = { coat:'#2b3b60', scarf:'#ff3f3f', skin:'#fdd7b0', eyes:'#000' };
+ctx.fillStyle = colors.coat; ctx.fillRect(12,12,8,12); ctx.fillRect(10,12,2,10); ctx.fillRect(20,12,2,10); ctx.fillRect(12,24,3,8); ctx.fillRect(17,24,3,8);
+ctx.fillStyle = colors.skin; ctx.fillRect(13,8,6,6);
+ctx.fillStyle = colors.scarf; ctx.fillRect(12,14,8,2);
+ctx.fillStyle = colors.eyes; ctx.fillRect(14,10,1,1); ctx.fillRect(18,10,1,1);
 
-// === Hills Background Generator ===
-const hillsCanvas = document.getElementById('hillsCanvas');
-const hctx = hillsCanvas.getContext('2d');
-hctx.clearRect(0, 0, 1920, 200);
-hctx.fillStyle = '#1b2c50';
-for(let i=0; i<10; i++){
-  const hillWidth = 200 + Math.random()*150;
-  const hillHeight = 50 + Math.random()*50;
-  const x = i * 180;
-  const y = 200 - hillHeight;
-  hctx.beginPath();
-  hctx.moveTo(x, 200);
-  hctx.quadraticCurveTo(x + hillWidth/2, y - hillHeight/2, x + hillWidth, 200);
-  hctx.fill();
-}
-
-// === Snowflake Generator ===
-const snowContainer = document.getElementById('snow');
-const snowCount = 50;
+// === Snowflakes ===
+const snowContainer=document.getElementById('snow');
+const snowCount=60;
 for(let i=0;i<snowCount;i++){
-  const snow = document.createElement('div');
-  snow.className = 'snowflake';
-  snow.style.left = Math.random()*100+'vw';
-  snow.style.fontSize = Math.random()*10+10+'px';
-  snow.style.animationDuration = 5 + Math.random()*5 + 's';
-  snow.innerHTML='❄';
-  snowContainer.appendChild(snow);
+    const snow=document.createElement('div');
+    snow.className='snowflake';
+    snow.style.left=Math.random()*100+'vw';
+    snow.style.fontSize=(Math.random()*8+8)+'px';
+    snow.style.animationDuration=(5+Math.random()*5)+'s';
+    snow.innerHTML='❄';
+    snowContainer.appendChild(snow);
 }
+
+// === Stars ===
+for(let i=0;i<50;i++){
+    const star=document.createElement('div');
+    star.className='star';
+    star.style.left=Math.random()*100+'vw';
+    star.style.top=Math.random()*50+'vh';
+    star.style.fontSize=(Math.random()*2+1)+'px';
+    star.style.animationDuration=(2+Math.random()*3)+'s';
+    star.innerHTML='✦';
+    document.body.appendChild(star);
+}
+
+// Optional: parallax movement on scroll
+window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    document.querySelector('.hills').style.transform = `translateX(${scrollTop*0.02}px)`;
+    document.querySelector('.cabins').style.transform = `translateX(${scrollTop*0.04}px)`;
+    document.querySelector('.trees').style.transform = `translateX(${scrollTop*0.06}px)`;
+});
 </script>
 
 </body>
