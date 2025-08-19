@@ -1,9 +1,7 @@
-```
-19:12:38.116	  {
-19:12:38.116	    "name": "worker-name",
-19:12:38.116	    "compatibility_date": "2025-08-18",
-19:12:38.117	    "assets": {
-19:12:38.117	      "directory": "./dist"
-19:12:38.117	    }
-19:12:38.117	  }
-19:12:38.118	  ```
+{
+  "name": "worker-name",
+  "compatibility_date": "2025-08-18",
+  "assets": {
+  "directory": "./dist"
+   }
+}
