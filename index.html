@@ -11,8 +11,8 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
     font-family: 'Press Start 2P', monospace;
-    background: linear-gradient(to bottom, #f0f4f8 0%, #dbe7f0 100%);
-    color:#333;
+    background: #0b1a33;
+    color:#eee;
     min-height:100vh;
     position:relative;
     overflow-x:hidden;
@@ -20,21 +20,21 @@ body {
 
 /* Header */
 header {
-    background:#a2c4e8;
+    background:#4b2e1e; /* cozy wood brown */
     padding:20px;
     text-align:center;
-    border-bottom:2px solid #7da6c7;
+    border-bottom:2px solid #3a2419;
     position:sticky;
     top:0;
     z-index:100;
 }
 header h1 {
     font-size:2em;
-    color:#fff;
-    text-shadow: 1px 1px #7da6c7;
+    color:#ffeedd;
+    text-shadow: 1px 1px #3a2419;
 }
 nav a {
-    color:#fff;
+    color:#ffeedd;
     text-decoration:none;
     margin:0 12px;
     font-size:0.8em;
@@ -58,12 +58,12 @@ main {
 }
 .hero h2 {
     font-size:1.5em;
-    color:#555;
+    color:#ddd;
     margin-bottom:15px;
 }
 .hero p {
     font-size:0.8em;
-    color:#444;
+    color:#ccc;
     max-width:600px;
     margin:0 auto 30px auto;
 }
@@ -90,15 +90,14 @@ main {
     padding:10px 20px;
     border:1px solid #7da6c7;
     border-radius:6px;
-    background:#cbe4f6;
-    color:#333;
+    background:#3a2419;
+    color:#ffeedd;
     text-decoration:none;
     font-size:0.8em;
     transition:0.3s;
 }
 .buttons a:hover {
-    background:#a2c4e8;
-    color:#fff;
+    background:#5a3626;
 }
 
 /* Snowfall with heavy drop shadow */
@@ -113,8 +112,6 @@ main {
     animation-duration:10s;
     animation-iteration-count:infinite;
     animation-timing-function:linear;
-
-    /* Heavier drop shadow for depth */
     text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
 }
 @keyframes fall {
@@ -122,13 +119,26 @@ main {
     100% { transform: translateY(110vh) rotate(360deg); }
 }
 
+/* Twinkling stars */
+.star {
+    position:absolute;
+    color: #fff;
+    font-size: 1px;
+    animation: twinkle 3s infinite alternate;
+    opacity:0.8;
+}
+@keyframes twinkle {
+    0% { opacity:0.3; }
+    100% { opacity:1; }
+}
+
 /* Footer */
 footer {
     text-align:center;
     padding:25px;
-    border-top:2px solid #7da6c7;
+    border-top:2px solid #3a2419;
     font-size:0.7em;
-    color:#666;
+    color:#ccc;
 }
 </style>
 </head>
@@ -174,6 +184,18 @@ for(let i=0;i<snowCount;i++){
     snow.style.animationDuration=(5+Math.random()*5)+'s';
     snow.innerHTML='❄';
     snowContainer.appendChild(snow);
+}
+
+// Twinkling stars
+for(let i=0;i<50;i++){
+    const star = document.createElement('div');
+    star.className='star';
+    star.style.left=Math.random()*100+'vw';
+    star.style.top=Math.random()*50+'vh';
+    star.style.fontSize=(Math.random()*2+1)+'px';
+    star.style.animationDuration=(2+Math.random()*3)+'s';
+    star.innerHTML='✦';
+    document.body.appendChild(star);
 }
 </script>
 
