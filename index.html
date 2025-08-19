@@ -5,31 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>L'Ontarien</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
-    font-family: 'Press Start 2P', monospace;
+    font-family:'Press Start 2P', monospace;
     min-height:100vh;
-    overflow-x:hidden;
-    color:#eee;
+    overflow:hidden;
     background: linear-gradient(to bottom, #0b1a33 0%, #1b2c50 40%, #2b3b60 100%);
     position:relative;
+    color:#eee;
 }
-
-/* Parallax layers */
-.layer {
-    position:fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    pointer-events:none;
-    z-index:0;
-}
-.hills { background: url('hills.png') repeat-x bottom; background-size: cover; z-index:1; }
-.cabins { background: url('cabins.png') repeat-x bottom; background-size: contain; z-index:2; }
-.trees { background: url('trees.png') repeat-x bottom; background-size: contain; z-index:3; }
-
-/* Header */
 header {
     background:#4b2e1e;
     padding:20px;
@@ -39,82 +24,41 @@ header {
     top:0;
     z-index:100;
 }
-header h1 { font-size:2em; color:#ffeedd; text-shadow: 1px 1px #3a2419; }
+header h1 { font-size:2em; color:#ffeedd; text-shadow:1px 1px #3a2419; }
 nav a { color:#ffeedd; text-decoration:none; margin:0 12px; font-size:0.8em; transition:0.3s; }
 nav a:hover { text-decoration:underline; }
 
-/* Hero */
-main { padding:50px 20px; max-width:900px; margin:0 auto; text-align:center; position:relative; z-index:10; }
-.hero h2 { font-size:1.5em; color:#fff; margin-bottom:15px; text-shadow:1px 1px #3a2419; }
-.hero p { font-size:0.8em; color:#ddd; max-width:600px; margin:0 auto 30px auto; }
-
-/* Pixel sprite canvas */
-#heroCanvas { width:128px; height:128px; display:block; margin:0 auto 20px auto; image-rendering: pixelated; }
-
-/* Buttons */
-.buttons a { display:inline-block; margin:8px; padding:10px 20px; border:1px solid #7da6c7; border-radius:6px; background:#3a2419; color:#ffeedd; text-decoration:none; font-size:0.8em; transition:0.3s; }
-.buttons a:hover { background:#5a3626; }
+#sceneCanvas { width:100%; height:70vh; display:block; background:#1b2c50; image-rendering: pixelated; }
 
 /* Snowflakes */
-.snowflake { position:absolute; top:-10px; color:#fff; font-size:1em; user-select:none; z-index:20; animation-name:fall; animation-duration:10s; animation-iteration-count:infinite; animation-timing-function:linear; text-shadow:2px 2px 4px rgba(0,0,0,0.7); }
-@keyframes fall { 0%{transform:translateY(0) rotate(0deg);} 100%{transform:translateY(110vh) rotate(360deg);} }
+.snowflake { position:absolute; top:-10px; color:#fff; font-size:1em; user-select:none; z-index:20; animation-name:fall; animation-duration:10s; animation-iteration-count:infinite; animation-timing-function:linear; text-shadow:2px 2px 4px rgba(0,0,0,0.7);}
+@keyframes fall {0%{transform:translateY(0) rotate(0deg);} 100%{transform:translateY(110vh) rotate(360deg);}}
 
-/* Twinkling stars */
-.star { position:absolute; color: #fff; font-size: 1px; animation: twinkle 3s infinite alternate; opacity:0.8; }
-@keyframes twinkle { 0%{opacity:0.3;} 100%{opacity:1;} }
-
-/* Footer */
 footer { text-align:center; padding:25px; border-top:2px solid #3a2419; font-size:0.7em; color:#ccc; position:relative; z-index:10; }
 </style>
 </head>
 <body>
 
-<div class="layer hills"></div>
-<div class="layer cabins"></div>
-<div class="layer trees"></div>
-
 <header>
-    <h1>L'Ontarien</h1>
-    <nav>
-        <a href="/">Home</a>
-        <a href="/about/">About</a>
-        <a href="/download/">Download</a>
-        <a href="/credits/">Credits</a>
-        <a href="/contact/">Contact</a>
-    </nav>
+<h1>L'Ontarien</h1>
+<nav>
+    <a href="/">Home</a>
+    <a href="/about/">About</a>
+    <a href="/download/">Download</a>
+    <a href="/credits/">Credits</a>
+    <a href="/contact/">Contact</a>
+</nav>
 </header>
 
-<main>
-    <section class="hero">
-        <h2>Bienvenue dans le village enneigé</h2>
-        <p>Explore a small Quebec town, make choices, meet quirky locals, and survive snowy mysteries. Cozy pixel art, secrets everywhere, your actions shape the story.</p>
-        <canvas id="heroCanvas" width="32" height="32"></canvas>
-        <div class="buttons">
-            <a href="/download/">Play Now</a>
-            <a href="/about/">Learn More</a>
-        </div>
-    </section>
-</main>
+<canvas id="sceneCanvas" width="320" height="180"></canvas>
+<div id="snow"></div>
 
 <footer>L'Ontarien © 2025. All Rights Reserved.</footer>
 
-<!-- Snowfall and stars -->
-<div id="snow"></div>
-
 <script>
-// === Pixel hero drawing ===
-const canvas = document.getElementById('heroCanvas');
-const ctx = canvas.getContext('2d');
-const colors = { coat:'#2b3b60', scarf:'#ff3f3f', skin:'#fdd7b0', eyes:'#000' };
-ctx.fillStyle = colors.coat; ctx.fillRect(12,12,8,12); ctx.fillRect(10,12,2,10); ctx.fillRect(20,12,2,10); ctx.fillRect(12,24,3,8); ctx.fillRect(17,24,3,8);
-ctx.fillStyle = colors.skin; ctx.fillRect(13,8,6,6);
-ctx.fillStyle = colors.scarf; ctx.fillRect(12,14,8,2);
-ctx.fillStyle = colors.eyes; ctx.fillRect(14,10,1,1); ctx.fillRect(18,10,1,1);
-
 // === Snowflakes ===
 const snowContainer=document.getElementById('snow');
-const snowCount=60;
-for(let i=0;i<snowCount;i++){
+for(let i=0;i<60;i++){
     const snow=document.createElement('div');
     snow.className='snowflake';
     snow.style.left=Math.random()*100+'vw';
@@ -124,25 +68,69 @@ for(let i=0;i<snowCount;i++){
     snowContainer.appendChild(snow);
 }
 
-// === Stars ===
-for(let i=0;i<50;i++){
-    const star=document.createElement('div');
-    star.className='star';
-    star.style.left=Math.random()*100+'vw';
-    star.style.top=Math.random()*50+'vh';
-    star.style.fontSize=(Math.random()*2+1)+'px';
-    star.style.animationDuration=(2+Math.random()*3)+'s';
-    star.innerHTML='✦';
-    document.body.appendChild(star);
+// === Scene generation ===
+const canvas=document.getElementById('sceneCanvas');
+const ctx=canvas.getContext('2d');
+
+function drawPixelRect(x,y,w,h,color){
+    ctx.fillStyle=color;
+    ctx.fillRect(x,y,w,h);
 }
 
-// Optional: parallax movement on scroll
-window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-    document.querySelector('.hills').style.transform = `translateX(${scrollTop*0.02}px)`;
-    document.querySelector('.cabins').style.transform = `translateX(${scrollTop*0.04}px)`;
-    document.querySelector('.trees').style.transform = `translateX(${scrollTop*0.06}px)`;
-});
+// Procedural hills
+function drawHills(){
+    for(let i=0;i<canvas.width;i+=5){
+        let height=Math.sin(i*0.05)*10+50;
+        drawPixelRect(i,canvas.height-height,5,height,'#2b3b60');
+    }
+}
+
+// Cabins
+function drawCabins(){
+    for(let i=20;i<canvas.width;i+=60){
+        let cabinHeight=10+Math.floor(Math.random()*6);
+        drawPixelRect(i,canvas.height-cabinHeight,10,cabinHeight,'#6b3a1e'); // walls
+        drawPixelRect(i-2,canvas.height-cabinHeight-5,14,5,'#3a2419'); // roof
+    }
+}
+
+// Trees
+function drawTrees(){
+    for(let i=10;i<canvas.width;i+=30){
+        let treeHeight=6+Math.floor(Math.random()*10);
+        drawPixelRect(i,canvas.height-treeHeight,3,treeHeight,'#1a3a1a'); // trunk
+        drawPixelRect(i-3,canvas.height-treeHeight-5,9,5,'#0f2a0f'); // foliage
+    }
+}
+
+// Cars
+let cars=[];
+function initCars(){
+    for(let i=0;i<3;i++){
+        cars.push({x:Math.random()*canvas.width,y:canvas.height-5,dir:Math.random()>0.5?1:-1,color:'#ff3f3f'});
+    }
+}
+function drawCars(){
+    cars.forEach(car=>{
+        drawPixelRect(car.x,car.y-2,4,2,car.color);
+        drawPixelRect(car.x,car.y-3,2,1,'#000'); // window
+        car.x+=car.dir*0.5;
+        if(car.x>canvas.width) car.x=-5;
+        if(car.x<-5) car.x=canvas.width;
+    });
+}
+
+// Animation loop
+initCars();
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    drawHills();
+    drawCabins();
+    drawTrees();
+    drawCars();
+    requestAnimationFrame(animate);
+}
+animate();
 </script>
 
 </body>
